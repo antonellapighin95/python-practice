@@ -1,73 +1,13 @@
 import random
+import hangman_list
+import hangman_stages
 
-stages = ['''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-''']
-
-
-word_list = ["aardvark", "baboon", "camel"]
-chosen_word = random.choice(word_list)
+chosen_word = random.choice(hangman_list.word_list)
 lenght_word = len(chosen_word)
 
 lives = 6
 
-#Testing code
-print(f'Pssst, the solution is {chosen_word}.')
-
-# Empty list called "display"
+# Empty list called "display" for each letter in the word
 
 display = []
 
@@ -76,8 +16,8 @@ for _ in range(lenght_word):
 
 #print(display)
 
-# Loop through each position in the chosen_word;
 
+# Loop through each position in the chosen_word;
 
 def replace_letter():
     for position in range(lenght_word):
@@ -88,20 +28,25 @@ def replace_letter():
             display[position] = letter
       
 
+
 end_of_game = False
-    
+
+# While loop
+
 while not end_of_game:
     guess = input("\n Put a letter here: ").lower()
     replace_letter()
-    #print(display)
 
     if guess not in chosen_word:
         lives -= 1
+
         if lives == 0:
             end_of_game = True
             print("\n You lose!")
+
         if lives > 0:
-            print(stages[lives+1])
+            print(hangman_stages.stages[lives+1])
+            print(f"You guessed {guess}, that letter is not in the word. You lose a life, try again!")
 
 
     print(f"\n {' '.join(display)}")
